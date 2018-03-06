@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import firebase from 'firebase';
-import Firstpage from './components/Firstpage';
 import config from './keys/key';
+import Firstpage from './components/Firstpage';
+import RowDice from './components/rowDice';
 
 export default class App extends Component {
   constructor(props){
@@ -16,9 +17,10 @@ export default class App extends Component {
   render() {
     return (
       <BrowserRouter>
-
-        <Route exact path="/" render={props=><Firstpage firebase={this.firebase}/>}/>
-
+        <Switch>
+          <Route exact path="/" render={props=><Firstpage firebase={this.firebase}/>}/>
+          <Route exact path="/yay" render={props=><RowDice/>}/>
+        </Switch>
       </BrowserRouter>
     );
   }
