@@ -4,10 +4,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^4.10.1",
-<<<<<<< HEAD
-=======
     "material-ui": "^0.20.0",
->>>>>>> bf5f1a29df9c777e52f29b9c8f3bc698aba557a3
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
