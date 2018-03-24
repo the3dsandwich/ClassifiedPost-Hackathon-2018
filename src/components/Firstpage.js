@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import TB from './titlebar';
 
 export default class Firstpage extends Component {
     constructor(props){
@@ -54,6 +55,8 @@ export default class Firstpage extends Component {
                 {this.displayText()}
                 <FlatButton label="+" onClick={this.handlePlusClick.bind(this)}/>
                 <FlatButton label="-" onClick={this.handleMinusClick.bind(this)}/>
+                <TB name="yay"/>
+                <TB name="woohoo"/>
             </Card>
         )
     }
