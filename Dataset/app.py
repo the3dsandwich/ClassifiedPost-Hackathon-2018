@@ -11,12 +11,9 @@ def index():
 @app.route('/api', methods=['GET'])
 def get():
     title = request.args.get('title')
-    return jsonify({"response":predict.pd(title)})
-
-
-
-
-
+    response = jsonify({"response":predict.pd(title)})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,63 +1,46 @@
 import React, { Component } from 'react';
-import RefreshIndicator from 'material-ui/RefreshIndicator';
-import {Card, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import TB from './titlebar';
+import Api from './api';
 
 export default class Firstpage extends Component {
     constructor(props){
         super(props);
         let that = this;
         this.state = {
-            testText: 0,
+
         };
-        this.firebase = this.props.firebase;
-        this.firebase.database().ref('/testData').once('value', function(snap){      // grab data from firebase once
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleTitleChange = this.handleTitleChange.bind(this);
+    }
+
+    displayAPI() {
+        let that = this;
+        Api.getViews(that.state.title).then(function(res) {
+            console.log("res = " + res)
             that.setState({
-                testText: snap.val().text,
+                viewcount: res
             });
         });
-        this.firebase.database().ref('/testData').on('value', function(snap){        // grab data from firebase whenever data changes
-            that.setState({
-                testNum: snap.val().number,
-            });
+    }
+
+    handleTitleChange(e) {
+        e.preventDefault();
+        this.setState({
+            title : e.target.value,
         });
     }
 
-    displayText() {
-        if(this.state.testText === 0) {
-            return(
-                <RefreshIndicator size={40} left={500} top={70} status="loading"/>
-            );
-        }
-        else {
-            return(
-                <CardText>"{this.state.testText}" was retrieved once from firebase and "{this.state.testNum}" is updated from firebase whenever it was changed</CardText>
-            );
-        }
-    }
-
-    handlePlusClick() {
-        this.firebase.database().ref('/testData/number').set(this.state.testNum + 1); // modify (set) data in firebase
-    }
-
-    handleMinusClick() {
-        this.firebase.database().ref('/testData/number').set(this.state.testNum - 1); // modify (set) data in firebase
+    handleSubmit(e) {
+        e.preventDefault();
+        this.displayAPI();
     }
 
     render() {
         return(
-            <Card>
-                <CardTitle title="Welcome to React"/>
-                <CardText>
-                To get started, edit <code>src/App.js</code> and save to reload.
-                </CardText>
-                {this.displayText()}
-                <FlatButton label="+" onClick={this.handlePlusClick.bind(this)}/>
-                <FlatButton label="-" onClick={this.handleMinusClick.bind(this)}/>
-                <TB name="yay"/>
-                <TB name="woohoo"/>
-            </Card>
+            <form onSubmit={this.handleSubmit}>
+                <input type="text" placeholder="enter title" value={this.state.title} onChange={this.handleTitleChange}/>
+                <button>Submit</button>
+                <p>{this.state.viewcount}</p>
+            </form>
         )
     }
 }
